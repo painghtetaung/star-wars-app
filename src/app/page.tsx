@@ -7,6 +7,7 @@ import useFetchPeople from "@/hooks/useFetchPeople"
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import LoadingSkeleton from "@/components/shared/LoadingSkeleton";
 import React, {useEffect, useState} from "react";
+import {peopleListsType} from "@/types";
 
 export default function Home() {
     const router = useRouter();
@@ -60,7 +61,7 @@ export default function Home() {
                     {
                         peopleLists.length > 0 ? (
 
-                                peopleLists.map((list, index) => (
+                                peopleLists.map((list: peopleListsType, index) => (
                                     <div className="group cursor-pointer" key={index}>
                                         <Image className="rounded-lg" src={`https://picsum.photos/200?random=${index}`} alt="profile-url" width={200} height={150}/>
                                         <div className=" flex gap-x-2 mt-4">

@@ -1,15 +1,15 @@
 import type { ThemeConfig } from "antd";
-
+import { theme } from "antd";
 // This configuration set up globally
 // Only updates when global style is needed for ant design components
-
-const theme: ThemeConfig = {
+const { darkAlgorithm, compactAlgorithm } = theme;
+const themeConfig: ThemeConfig = {
   token: {
     fontSize: 16,
-    fontFamily: "var(--font-poppins)",
-    colorPrimary: "#1E46D2",
-    colorLink: "#1E46D2",
+    colorText: "#FFF"
+    // colorPrimary: "#FFF",
   },
+  // algorithm: [darkAlgorithm, compactAlgorithm],
   components: {
     Input: { borderRadius: 3, controlHeight: 48, colorBorder: "#B8B8B8" },
     Button: {
@@ -23,4 +23,4 @@ const theme: ThemeConfig = {
   },
 };
 
-export default theme;
+export default themeConfig;

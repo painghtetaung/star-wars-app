@@ -20,9 +20,9 @@ export default function Home() {
         data: peopleResponse
     } = useFetchPeople();
 
-    const searchOnChange = (e) => {
+    const searchOnChange = (e: React.FormEvent<HTMLInputElement>) => {
         // router.push(`${/}`)
-        fetchPeople(`https://swapi.dev/api/people/?search=${e.target.value}`)
+        fetchPeople(`https://swapi.dev/api/people/?search=${e.currentTarget.value}`)
         // console.log(e.target.value);
     }
 

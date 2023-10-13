@@ -9,7 +9,7 @@ const themeConfig: ThemeConfig = {
     colorText: "#FFF"
     // colorPrimary: "#FFF",
   },
-  // algorithm: [darkAlgorithm, compactAlgorithm],
+  algorithm: [darkAlgorithm, compactAlgorithm],
   components: {
     Input: { borderRadius: 3, controlHeight: 48, colorBorder: "#B8B8B8" },
     Button: {

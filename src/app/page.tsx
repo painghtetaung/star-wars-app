@@ -1,10 +1,10 @@
 "use client"
 
 import Image from 'next/image'
-import {Spin, Input, Button} from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import {Button, Input} from "antd";
+import {LeftOutlined, RightOutlined, SearchOutlined} from "@ant-design/icons";
 import useFetchPeople from "@/hooks/useFetchPeople"
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import LoadingSkeleton from "@/components/shared/LoadingSkeleton";
 import React, {useEffect, useState} from "react";
 import {peopleListsType} from "@/types";
@@ -13,6 +13,35 @@ export default function Home() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [peopleLists, setPeopleLists] = useState([]);
+
+   const getNextPage = (urlString: string | null | undefined) => {
+       if (urlString) {
+           const urlParts = urlString.split("?");
+           if (urlParts.length > 1) {
+               const queryString = urlParts[1];
+
+               // Split the query string by the "&" character to separate individual parameters
+               const parameters = queryString.split("&");
+
+               // Initialize a variable to store the "page" value
+               let pageValue = null;
+
+               // Loop through the parameters to find the "page" parameter
+               for (const param of parameters) {
+                   const [key, value] = param.split("=");
+                   if (key === "page") {
+                       pageValue = value;
+                       break; // Stop the loop once "page" is found
+                   }
+               }
+
+               if (pageValue !== null) {
+                   return parseInt(pageValue);
+               }
+           }
+       }
+   }
+
 
     const {
         mutate: fetchPeople,
@@ -25,6 +54,10 @@ export default function Home() {
         // router.push(`${/}`)
         fetchPeople(`https://swapi.dev/api/people/?search=${e.currentTarget.value}`)
         // console.log(e.target.value);
+    }
+
+    const paginationHandler = (route: string) => {
+        fetchPeople(route)
     }
 
     useEffect(() => {
@@ -40,8 +73,8 @@ export default function Home() {
         }
     }, [peopleLoading, peopleResponse])
 
-
-  return (
+    console.log(getNextPage(peopleResponse?.next))
+    return (
     <main className="flex min-h-screen flex-col">
         <nav className="p-8 grid grid-cols-3">
             <div/>
@@ -75,6 +108,19 @@ export default function Home() {
                         ) : <>NO Lists</>
                     }
                 </section>
+
+            )
+        }
+        {
+            !peopleLoading && peopleResponse?.count > 10 && (
+                <div className="flex items-center justify-center mt-10">
+                    <div className="flex items-center gap-x-2">
+                        <Button type="primary" className="!text-white" shape="circle" icon={<LeftOutlined />} disabled={!peopleResponse?.previous} onClick={() => paginationHandler(peopleResponse?.previous)}/>
+                        {peopleResponse?.next !== null ? parseInt(getNextPage(peopleResponse?.next) as unknown as string) - 1 : "last page"}
+                        <Button type="primary" className="!text-white" shape="circle" icon={<RightOutlined />} disabled={!peopleResponse?.next} onClick={() => paginationHandler(peopleResponse?.next)}/>
+
+                    </div>
+                </div>
             )
         }
     </main>

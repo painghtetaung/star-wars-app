@@ -27,6 +27,7 @@ export default function Home() {
     const [searchBySpecies, setSearchBySpecies]=useState<null | number>(null);
     const[handleOkState,setHandleOkState] = useState(false);
     const [detailUrl, setDetailUrl] = useState("");
+    const [imageUrl, setImageUrl] = useState<string>("")
     const [filterObject, setFilterObject] = useState<filterObjType>({
         homeWorld: "",
         species: "",
@@ -161,8 +162,9 @@ export default function Home() {
     }
 
     // I don't usually use any but to deliver fast due to coding test's timeline
-    const detailOnclick = (list: any) => {
+    const detailOnclick = (list: any, index: number) => {
         showDetailModal();
+        setImageUrl(`https://picsum.photos/200?random=${index}`)
         setDetailUrl(list.url)
     }
 
@@ -170,7 +172,7 @@ export default function Home() {
         fetchPeople("https://swapi.dev/api/people/")
     }, [fetchPeople])
 
-
+console.log(peopleLists)
 
     useEffect(() => {
         if(!peopleLoading && peopleResponse) {
@@ -203,7 +205,7 @@ export default function Home() {
     return (
     <main className="flex min-h-screen flex-col">
 
-        <DetailModal open={isDetailModalOpen} onOk={handleDetailOk} onCancel={handleDetailCancel} detailUrl={detailUrl}/>
+        <DetailModal open={isDetailModalOpen} onOk={handleDetailOk} onCancel={handleDetailCancel} detailUrl={detailUrl} imageUrl={imageUrl}/>
 
         {/*Filter modal*/}
         <Modal className="!text-black" title="Filter" open={isFilterModalOpen} onOk={handleOk} onCancel={handleCancel}
@@ -285,7 +287,7 @@ export default function Home() {
                         peopleLists.length > 0 ? (
 
                             peopleLists.map((list: peopleListsType, index) => (
-                                <div className="group cursor-pointer" key={index} onClick={() => detailOnclick(list)}>
+                                <div className="group cursor-pointer" key={index} onClick={() => detailOnclick(list, index)}>
                                     <Image className="rounded-lg" src={`https://picsum.photos/200?random=${index}`}
                                            alt="profile-url" width={200} height={150}/>
                                     <div className=" flex gap-x-2 mt-4">

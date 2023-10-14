@@ -14,7 +14,7 @@ const themeConfig: ThemeConfig = {
     Input: { borderRadius: 3, controlHeight: 48, colorBorder: "#B8B8B8" },
     Button: {
       borderRadius: 0,
-      colorPrimaryBg: "#1677ff",
+      colorPrimaryBg: "#1677ff !important",
     },
     Select: {
       controlHeight: 48,

@@ -21,7 +21,7 @@ type filterObjType = {
 const StarWarsClient = () => {
     const router = useRouter();
     const auth_token = getCookie("auth_token");
-    const searchParams = useSearchParams();
+    // const searchParams = useSearchParams();
     const [peopleLists, setPeopleLists] = useState([]);
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);

@@ -279,7 +279,7 @@ const StarWarsClient = () => {
                     </div>
                 </div>
             </Modal>
-            <nav className="p-8 grid grid-cols-3 items-center">
+            <nav className="p-8 md:grid md:grid-cols-3 items-center">
                 <div>
                 </div>
                 <div className="grid justify-items-center">
@@ -306,7 +306,7 @@ const StarWarsClient = () => {
             </nav>
             {
                 peopleLoading ? <LoadingSkeleton/> : (
-                    <section className="px-8 grid grid-cols-8 gap-x-8 gap-y-6">
+                    <section className="px-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-6">
                         {
                             peopleLists.length > 0 ? (
 

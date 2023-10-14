@@ -6,7 +6,7 @@ const { darkAlgorithm, compactAlgorithm } = theme;
 const themeConfig: ThemeConfig = {
   token: {
     fontSize: 16,
-    colorText: "#FFF"
+    // colorText: "#FFF"
     // colorPrimary: "#FFF",
   },
   algorithm: [darkAlgorithm, compactAlgorithm],

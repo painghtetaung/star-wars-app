@@ -8,22 +8,12 @@ import {useRouter, useSearchParams} from "next/navigation";
 import LoadingSkeleton from "@/components/shared/LoadingSkeleton";
 import React, {useEffect, useState} from "react";
 import {peopleListsType} from "@/types";
+import DetailModal from "@/components/DetailModal";
 
 type filterObjType = {
     homeWorld: string | number,
     species: string | number,
     films: string | number
-}
-
-
-function DetailModal(props: { open: boolean, onOk: () => void, onCancel: () => void }) {
-    return <>
-        {/*Detail modal*/}
-        <Modal className="!text-black" title="Filter" open={props.open} onOk={props.onOk} onCancel={props.onCancel}
-               cancelText={"Close"} okText="Save">
-            Detail
-        </Modal>
-    </>;
 }
 
 export default function Home() {
@@ -36,6 +26,7 @@ export default function Home() {
     const [searchByFilms, setSearchByFilms]=useState<null | number>(null);
     const [searchBySpecies, setSearchBySpecies]=useState<null | number>(null);
     const[handleOkState,setHandleOkState] = useState(false);
+    const [detailUrl, setDetailUrl] = useState("");
     const [filterObject, setFilterObject] = useState<filterObjType>({
         homeWorld: "",
         species: "",
@@ -52,26 +43,17 @@ export default function Home() {
 
 
     const showDetailModal = () => {
-        setIsFilterModalOpen(true);
+        setIsDetailModalOpen(true);
     };
 
     const handleDetailOk = () => {
-        setIsFilterModalOpen(false);
-        setHandleOkState(true);
+        setIsDetailModalOpen(false);
+        // setHandleOkState(true);
     };
 
     const handleDetailCancel = () => {
-        setIsFilterModalOpen(false);
-        setHandleOkState(false);
-        fetchPeople("https://swapi.dev/api/people/")
-        setSearchByFilms(null);
-        setSearchBySpecies(null);
-        setSearchByHomeWorld(null);
-        setFilterObject({
-            homeWorld: "",
-            species: "",
-            films: ""
-        })
+        setIsDetailModalOpen(false);
+
     };
 
 
@@ -178,6 +160,12 @@ export default function Home() {
         fetchPeople(route)
     }
 
+    // I don't usually use any but to deliver fast due to coding test's timeline
+    const detailOnclick = (list: any) => {
+        showDetailModal();
+        setDetailUrl(list.url)
+    }
+
     useEffect(() => {
         fetchPeople("https://swapi.dev/api/people/")
     }, [fetchPeople])
@@ -186,9 +174,7 @@ export default function Home() {
 
     useEffect(() => {
         if(!peopleLoading && peopleResponse) {
-            console.log("use effect calling")
             let peopleListRes = peopleResponse.results;
-            console.log(peopleResponse.results,"in use effect")
            peopleListRes = peopleResponse.results.map((result: any, index: number) => {
                 return { ...result, homeworld: Math.floor(Math.random() * 5) + 1, species:  Math.floor(Math.random() * 5) + 1, films: Math.floor(Math.random() * 5) + 1}
             })
@@ -196,7 +182,6 @@ export default function Home() {
             if(filterObject.homeWorld !== "" || filterObject.films !== "" || filterObject.species !== "") {
                 const results = !peopleLoading && peopleResponse && filterPeople(peopleListRes);
                 setPeopleLists(results);
-                console.log("filter occour")
             }else {
                 setPeopleLists(peopleListRes);
             }
@@ -212,12 +197,13 @@ export default function Home() {
         };
     }, [handleOkState, fetchPeople]);
 
-    console.log(peopleLists, "people lists");
-    console.log(filterObject, "filter object");
+    // console.log(peopleLists, "people lists");
+    // console.log(filterObject, "filter object");
+    console.log(detailUrl, "detailurl")
     return (
     <main className="flex min-h-screen flex-col">
 
-        <DetailModal open={isDetailModalOpen} onOk={handleDetailOk} onCancel={handleDetailCancel}/>
+        <DetailModal open={isDetailModalOpen} onOk={handleDetailOk} onCancel={handleDetailCancel} detailUrl={detailUrl}/>
 
         {/*Filter modal*/}
         <Modal className="!text-black" title="Filter" open={isFilterModalOpen} onOk={handleOk} onCancel={handleCancel}
@@ -299,7 +285,7 @@ export default function Home() {
                         peopleLists.length > 0 ? (
 
                             peopleLists.map((list: peopleListsType, index) => (
-                                <div className="group cursor-pointer" key={index}>
+                                <div className="group cursor-pointer" key={index} onClick={() => detailOnclick(list)}>
                                     <Image className="rounded-lg" src={`https://picsum.photos/200?random=${index}`}
                                            alt="profile-url" width={200} height={150}/>
                                     <div className=" flex gap-x-2 mt-4">

@@ -59,7 +59,7 @@ const DetailModal: React.FC<DetailModalProps> = ({open, onOk,onCancel, detailUrl
         <Modal className="!text-black" open={open} onOk={onOk} onCancel={onCancel} footer={null}
                cancelText={"Close"} okText="Save">
             {
-                specResponse && !specLoading &&  homeworldLoading && homeworldResponse ? (
+                specResponse && !specLoading &&  !homeworldLoading && homeworldResponse ? (
                     <>
                         <div>
                             {

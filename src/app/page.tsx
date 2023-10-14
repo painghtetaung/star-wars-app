@@ -16,11 +16,22 @@ type filterObjType = {
 }
 
 
+function DetailModal(props: { open: boolean, onOk: () => void, onCancel: () => void }) {
+    return <>
+        {/*Detail modal*/}
+        <Modal className="!text-black" title="Filter" open={props.open} onOk={props.onOk} onCancel={props.onCancel}
+               cancelText={"Close"} okText="Save">
+            Detail
+        </Modal>
+    </>;
+}
+
 export default function Home() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [peopleLists, setPeopleLists] = useState([]);
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+    const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
     const [searchByHomeWorld, setSearchByHomeWorld]=useState<null | number>(null);
     const [searchByFilms, setSearchByFilms]=useState<null | number>(null);
     const [searchBySpecies, setSearchBySpecies]=useState<null | number>(null);
@@ -38,6 +49,32 @@ export default function Home() {
             return homeworldFilter && speciesFilter && filmsFilter
         })
      }
+
+
+    const showDetailModal = () => {
+        setIsFilterModalOpen(true);
+    };
+
+    const handleDetailOk = () => {
+        setIsFilterModalOpen(false);
+        setHandleOkState(true);
+    };
+
+    const handleDetailCancel = () => {
+        setIsFilterModalOpen(false);
+        setHandleOkState(false);
+        fetchPeople("https://swapi.dev/api/people/")
+        setSearchByFilms(null);
+        setSearchBySpecies(null);
+        setSearchByHomeWorld(null);
+        setFilterObject({
+            homeWorld: "",
+            species: "",
+            films: ""
+        })
+    };
+
+
     const showModal = () => {
         setIsFilterModalOpen(true);
     };
@@ -45,8 +82,6 @@ export default function Home() {
     const handleOk = () => {
         setIsFilterModalOpen(false);
         setHandleOkState(true);
-        const filterRes = filterPeople();
-        setPeopleLists(filterRes);
     };
 
     const handleCancel = () => {
@@ -181,16 +216,22 @@ export default function Home() {
     console.log(filterObject, "filter object");
     return (
     <main className="flex min-h-screen flex-col">
-        <Modal className="!text-black" title="Filter" open={isFilterModalOpen} onOk={handleOk} onCancel={handleCancel} cancelText={"Close"} okText="Save">
+
+        <DetailModal open={isDetailModalOpen} onOk={handleDetailOk} onCancel={handleDetailCancel}/>
+
+        {/*Filter modal*/}
+        <Modal className="!text-black" title="Filter" open={isFilterModalOpen} onOk={handleOk} onCancel={handleCancel}
+               cancelText={"Close"} okText="Save">
             <div className="grid grid-cols-2 items-center mb-2">
                 <span>Home World: </span>
                 <div className="w-full">
-                    <Select value={searchByHomeWorld} placeholder="Select" allowClear className="!placeholder-white !bg-transparent !w-full" options={[
-                        { value: 1, label: 'Jack' },
-                        { value: 2, label: 'Lucy' },
-                        { value: 3, label: 'yiminghe' },
-                        { value: 4, label: 'Disabled'},
-                        { value: 5, label: 'Disabled'},
+                    <Select value={searchByHomeWorld} placeholder="Select" allowClear
+                            className="!placeholder-white !bg-transparent !w-full" options={[
+                        {value: 1, label: 'Jack'},
+                        {value: 2, label: 'Lucy'},
+                        {value: 3, label: 'yiminghe'},
+                        {value: 4, label: 'Disabled'},
+                        {value: 5, label: 'Disabled'},
                     ]}
                             onChange={homeWorldFilterHandler}
                     />
@@ -200,12 +241,13 @@ export default function Home() {
             <div className="grid grid-cols-2 items-center mb-2">
                 <span>Species: </span>
                 <div className="w-full">
-                    <Select value={searchBySpecies} placeholder="Select" allowClear className="!placeholder-white !bg-transparent !w-full" options={[
-                        { value: 1, label: 'had' },
-                        { value: 2, label: 'Lucy' },
-                        { value: 3, label: 'asdasd' },
-                        { value: 4, label: 'abled'},
-                        { value: 5, label: 'Dled'},
+                    <Select value={searchBySpecies} placeholder="Select" allowClear
+                            className="!placeholder-white !bg-transparent !w-full" options={[
+                        {value: 1, label: 'had'},
+                        {value: 2, label: 'Lucy'},
+                        {value: 3, label: 'asdasd'},
+                        {value: 4, label: 'abled'},
+                        {value: 5, label: 'Dled'},
                     ]}
                             onChange={speciesFilterHandler}
                     />
@@ -215,12 +257,13 @@ export default function Home() {
             <div className="grid grid-cols-2 items-center">
                 <span>Films: </span>
                 <div>
-                    <Select value={searchByFilms} placeholder="Select" allowClear className="!placeholder-white !bg-transparent !w-full" options={[
-                        { value: 1, label: 'had' },
-                        { value: 2, label: 'Lucy' },
-                        { value: 3, label: 'asdasd' },
-                        { value: 4, label: 'abled'},
-                        { value: 5, label: 'Dled'},
+                    <Select value={searchByFilms} placeholder="Select" allowClear
+                            className="!placeholder-white !bg-transparent !w-full" options={[
+                        {value: 1, label: 'had'},
+                        {value: 2, label: 'Lucy'},
+                        {value: 3, label: 'asdasd'},
+                        {value: 4, label: 'abled'},
+                        {value: 5, label: 'Dled'},
                     ]}
                             onChange={filmsFilterHandler}
                     />
@@ -241,7 +284,10 @@ export default function Home() {
                             <FilterFilled className="!text-white"/>
                         </Button>
                     </div>
-                    <div className="text-lg flex gap-x-2 items-center"><SearchOutlined /><Input onChange={searchOnChange} className="!placeholder-white !w-[80px] !text-white" placeholder="Search" bordered={false} /></div>
+                    <div className="text-lg flex gap-x-2 items-center"><SearchOutlined/><Input onChange={searchOnChange}
+                                                                                               className="!placeholder-white !w-[80px] !text-white"
+                                                                                               placeholder="Search"
+                                                                                               bordered={false}/></div>
                     <Button className="!text-white" type="text">Sign In</Button>
                 </div>
             </div>
@@ -252,16 +298,17 @@ export default function Home() {
                     {
                         peopleLists.length > 0 ? (
 
-                                peopleLists.map((list: peopleListsType, index) => (
-                                    <div className="group cursor-pointer" key={index}>
-                                        <Image className="rounded-lg" src={`https://picsum.photos/200?random=${index}`} alt="profile-url" width={200} height={150}/>
-                                        <div className=" flex gap-x-2 mt-4">
-                                            <div className="w-[24px] h-[4px] bg-[#5a5c5d] group-hover:bg-white rounded"/>
-                                            <div className="w-1 h-1 bg-[#5a5c5d] rounded-full group-hover:bg-white"/>
-                                        </div>
-                                        <h3 className="mt-2">{list.name}</h3>
+                            peopleLists.map((list: peopleListsType, index) => (
+                                <div className="group cursor-pointer" key={index}>
+                                    <Image className="rounded-lg" src={`https://picsum.photos/200?random=${index}`}
+                                           alt="profile-url" width={200} height={150}/>
+                                    <div className=" flex gap-x-2 mt-4">
+                                        <div className="w-[24px] h-[4px] bg-[#5a5c5d] group-hover:bg-white rounded"/>
+                                        <div className="w-1 h-1 bg-[#5a5c5d] rounded-full group-hover:bg-white"/>
                                     </div>
-                                ))
+                                    <h3 className="mt-2">{list.name}</h3>
+                                </div>
+                            ))
 
                         ) : <>NO Lists</>
                     }
@@ -273,9 +320,12 @@ export default function Home() {
             !peopleLoading && peopleResponse?.count > 10 && (
                 <div className="flex items-center justify-center mt-10">
                     <div className="flex items-center gap-x-2">
-                        <Button type="primary" className="!text-white" shape="circle" icon={<LeftOutlined />} disabled={!peopleResponse?.previous} onClick={() => paginationHandler(peopleResponse?.previous)}/>
+                        <Button type="primary" className="!text-white" shape="circle" icon={<LeftOutlined/>}
+                                disabled={!peopleResponse?.previous}
+                                onClick={() => paginationHandler(peopleResponse?.previous)}/>
                         {peopleResponse?.next !== null ? parseInt(getNextPage(peopleResponse?.next) as unknown as string) - 1 : "last page"}
-                        <Button type="primary" className="!text-white" shape="circle" icon={<RightOutlined />} disabled={!peopleResponse?.next} onClick={() => paginationHandler(peopleResponse?.next)}/>
+                        <Button type="primary" className="!text-white" shape="circle" icon={<RightOutlined/>}
+                                disabled={!peopleResponse?.next} onClick={() => paginationHandler(peopleResponse?.next)}/>
 
                     </div>
                 </div>

@@ -236,11 +236,11 @@ const StarWarsClient = () => {
                     <div className="w-full">
                         <Select value={searchByHomeWorld} placeholder="Select" allowClear
                                 className="!placeholder-white !bg-transparent !w-full" options={[
-                            {value: 1, label: 'Jack'},
-                            {value: 2, label: 'Lucy'},
-                            {value: 3, label: 'yiminghe'},
-                            {value: 4, label: 'Disabled'},
-                            {value: 5, label: 'Disabled'},
+                            {value: 1, label: 'Tatooine'},
+                            {value: 2, label: 'Alderaan'},
+                            {value: 3, label: 'Yavin IV'},
+                            {value: 4, label: 'Hoth'},
+                            {value: 5, label: 'Dagobah'},
                         ]}
                                 onChange={homeWorldFilterHandler}
                         />
@@ -252,11 +252,11 @@ const StarWarsClient = () => {
                     <div className="w-full">
                         <Select value={searchBySpecies} placeholder="Select" allowClear
                                 className="!placeholder-white !bg-transparent !w-full" options={[
-                            {value: 1, label: 'had'},
-                            {value: 2, label: 'Lucy'},
-                            {value: 3, label: 'asdasd'},
-                            {value: 4, label: 'abled'},
-                            {value: 5, label: 'Dled'},
+                            {value: 1, label: 'Human'},
+                            {value: 2, label: 'Droid'},
+                            {value: 3, label: 'Wookie'},
+                            {value: 4, label: 'Rodian'},
+                            {value: 5, label: 'Hutt'},
                         ]}
                                 onChange={speciesFilterHandler}
                         />
@@ -268,11 +268,11 @@ const StarWarsClient = () => {
                     <div>
                         <Select value={searchByFilms} placeholder="Select" allowClear
                                 className="!placeholder-white !bg-transparent !w-full" options={[
-                            {value: 1, label: 'had'},
-                            {value: 2, label: 'Lucy'},
-                            {value: 3, label: 'asdasd'},
-                            {value: 4, label: 'abled'},
-                            {value: 5, label: 'Dled'},
+                            {value: 1, label: 'A New Hope'},
+                            {value: 2, label: 'The Empire Strikes Back'},
+                            {value: 3, label: 'Return of the Jedi'},
+                            {value: 4, label: 'The Phantom Menace'},
+                            {value: 5, label: 'Attack of the Clones'},
                         ]}
                                 onChange={filmsFilterHandler}
                         />

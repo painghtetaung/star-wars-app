@@ -77,7 +77,7 @@ const DetailModal: React.FC<DetailModalProps> = ({open, onOk,onCancel, detailUrl
         {/*Detail modal*/}
         <Modal className="!text-black" open={open} onOk={onOk} onCancel={onCancel} footer={null}
                cancelText={"Close"} okText="Save">
-           <div className="!min-h-[300px]">
+           <div className="!min-h-[300px]" data-testid="detail-modal">
                {
                    specResponse && !specLoading &&  !homeworldLoading && homeworldResponse ? (
                        <div>
@@ -86,43 +86,43 @@ const DetailModal: React.FC<DetailModalProps> = ({open, onOk,onCancel, detailUrl
                            </div>
                            <div className="grid grid-cols-2 text-center items-center mt-8">
                                <h2>Name :</h2>
-                               <div>{personDetail?.name}</div>
+                               <div data-testid="name">{personDetail?.name}</div>
                            </div>
                            <div className="grid grid-cols-2 text-center items-center mt-8">
                                <h2>Height :</h2>
-                               <div>{personDetail?.height} meters</div>
+                               <div data-testid="height">{personDetail?.height} meters</div>
                            </div>
                            <div className="grid grid-cols-2 text-center items-center mt-8">
                                <h2>Mass :</h2>
-                               <div>{ personDetail?.mass} kg</div>
+                               <div data-testid="mass">{ personDetail?.mass} kg</div>
                            </div>
                            <div className="grid grid-cols-2 text-center items-center mt-8">
                                <h2>Created Date :</h2>
-                               <div>{dayjs(personDetail?.created).format('DD-MM-YYYY')}</div>
+                               <div data-testid="created">{dayjs(personDetail?.created).format('DD-MM-YYYY')}</div>
                            </div>
                            <div className="grid grid-cols-2 text-center items-center mt-8">
                                <h2>Number of Films :</h2>
-                               <div>{personDetail?.films?.length}</div>
+                               <div data-testid="films">{personDetail?.films?.length}</div>
                            </div>
                            <div className="grid grid-cols-2 text-center items-center mt-8">
                                <h2>Birth Year :</h2>
-                               <div>{personDetail?.birth_year}</div>
+                               <div data-testid="birth-year">{personDetail?.birth_year}</div>
                            </div>
                            <div className="grid grid-cols-2 text-center items-center mt-8">
                                <h2>HomeWorld :</h2>
-                               <div>{personDetail?.homeworld?.name}</div>
+                               <div data-testid="homeworld">{personDetail?.homeworld?.name}</div>
                            </div>
                            <div className="grid grid-cols-2 text-center items-center mt-8">
                                <h2>Terrain :</h2>
-                               <div>{personDetail?.homeworld?.terrain}</div>
+                               <div data-testid="terrain">{personDetail?.homeworld?.terrain}</div>
                            </div>
                            <div className="grid grid-cols-2 text-center items-center mt-8">
                                <h2>Climate :</h2>
-                               <div>{personDetail?.homeworld?.climate}</div>
+                               <div data-testid="climate">{personDetail?.homeworld?.climate}</div>
                            </div>
                            <div className="grid grid-cols-2 text-center items-center mt-8">
-                               <h2>Climate :</h2>
-                               <div>{personDetail?.homeworld?.residents?.length}</div>
+                               <h2>Residents :</h2>
+                               <div data-testid="residents">{personDetail?.homeworld?.residents?.length}</div>
                            </div>
                        </div>
                    ) : (

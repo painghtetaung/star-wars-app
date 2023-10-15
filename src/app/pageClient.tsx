@@ -179,8 +179,8 @@ const StarWarsClient = () => {
 
     useEffect(() => {
         if(!peopleLoading && peopleResponse) {
-            let peopleListRes = peopleResponse.results;
-            peopleListRes = peopleResponse.results.map((result: any, index: number) => {
+            let peopleListRes = peopleResponse?.results;
+            peopleListRes = peopleResponse?.results?.map((result: any, index: number) => {
                 return { ...result, homeworld: Math.floor(Math.random() * 5) + 1, species:  Math.floor(Math.random() * 5) + 1, films: Math.floor(Math.random() * 5) + 1}
             })
             setPeopleLists(peopleListRes)
@@ -308,10 +308,10 @@ const StarWarsClient = () => {
                 peopleLoading ? <LoadingSkeleton/> : (
                     <section className="px-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-6">
                         {
-                            peopleLists.length > 0 ? (
+                            peopleLists?.length > 0 ? (
 
-                                peopleLists.map((list: peopleListsType, index) => (
-                                    <div className="group cursor-pointer" key={index} onClick={() => detailOnclick(list, index)}>
+                                peopleLists?.map((list: peopleListsType, index) => (
+                                    <div className="group cursor-pointer" key={index} onClick={() => detailOnclick(list, index)} data-testid={`detail-card-${index}`}>
                                         <Image className="rounded-lg" src={`https://picsum.photos/200?random=${index}`}
                                                alt="profile-url" width={200} height={150}/>
                                         <div className=" flex gap-x-2 mt-4">

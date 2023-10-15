@@ -21,7 +21,7 @@ type filterObjType = {
 const StarWarsClient = () => {
     const router = useRouter();
     const auth_token = getCookie("auth_token");
-    const searchParams = useSearchParams();
+    // const searchParams = useSearchParams();
     const [peopleLists, setPeopleLists] = useState([]);
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
@@ -179,8 +179,8 @@ const StarWarsClient = () => {
 
     useEffect(() => {
         if(!peopleLoading && peopleResponse) {
-            let peopleListRes = peopleResponse.results;
-            peopleListRes = peopleResponse.results.map((result: any, index: number) => {
+            let peopleListRes = peopleResponse?.results;
+            peopleListRes = peopleResponse?.results?.map((result: any, index: number) => {
                 return { ...result, homeworld: Math.floor(Math.random() * 5) + 1, species:  Math.floor(Math.random() * 5) + 1, films: Math.floor(Math.random() * 5) + 1}
             })
             setPeopleLists(peopleListRes)
@@ -236,11 +236,11 @@ const StarWarsClient = () => {
                     <div className="w-full">
                         <Select value={searchByHomeWorld} placeholder="Select" allowClear
                                 className="!placeholder-white !bg-transparent !w-full" options={[
-                            {value: 1, label: 'Jack'},
-                            {value: 2, label: 'Lucy'},
-                            {value: 3, label: 'yiminghe'},
-                            {value: 4, label: 'Disabled'},
-                            {value: 5, label: 'Disabled'},
+                            {value: 1, label: 'Tatooine'},
+                            {value: 2, label: 'Alderaan'},
+                            {value: 3, label: 'Yavin IV'},
+                            {value: 4, label: 'Hoth'},
+                            {value: 5, label: 'Dagobah'},
                         ]}
                                 onChange={homeWorldFilterHandler}
                         />
@@ -252,11 +252,11 @@ const StarWarsClient = () => {
                     <div className="w-full">
                         <Select value={searchBySpecies} placeholder="Select" allowClear
                                 className="!placeholder-white !bg-transparent !w-full" options={[
-                            {value: 1, label: 'had'},
-                            {value: 2, label: 'Lucy'},
-                            {value: 3, label: 'asdasd'},
-                            {value: 4, label: 'abled'},
-                            {value: 5, label: 'Dled'},
+                            {value: 1, label: 'Human'},
+                            {value: 2, label: 'Droid'},
+                            {value: 3, label: 'Wookie'},
+                            {value: 4, label: 'Rodian'},
+                            {value: 5, label: 'Hutt'},
                         ]}
                                 onChange={speciesFilterHandler}
                         />
@@ -268,11 +268,11 @@ const StarWarsClient = () => {
                     <div>
                         <Select value={searchByFilms} placeholder="Select" allowClear
                                 className="!placeholder-white !bg-transparent !w-full" options={[
-                            {value: 1, label: 'had'},
-                            {value: 2, label: 'Lucy'},
-                            {value: 3, label: 'asdasd'},
-                            {value: 4, label: 'abled'},
-                            {value: 5, label: 'Dled'},
+                            {value: 1, label: 'A New Hope'},
+                            {value: 2, label: 'The Empire Strikes Back'},
+                            {value: 3, label: 'Return of the Jedi'},
+                            {value: 4, label: 'The Phantom Menace'},
+                            {value: 5, label: 'Attack of the Clones'},
                         ]}
                                 onChange={filmsFilterHandler}
                         />
@@ -308,10 +308,10 @@ const StarWarsClient = () => {
                 peopleLoading ? <LoadingSkeleton/> : (
                     <section className="px-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-6">
                         {
-                            peopleLists.length > 0 ? (
+                            peopleLists?.length > 0 ? (
 
-                                peopleLists.map((list: peopleListsType, index) => (
-                                    <div className="group cursor-pointer" key={index} onClick={() => detailOnclick(list, index)}>
+                                peopleLists?.map((list: peopleListsType, index) => (
+                                    <div className="group cursor-pointer" key={index} onClick={() => detailOnclick(list, index)} data-testid={`detail-card-${index}`}>
                                         <Image className="rounded-lg" src={`https://picsum.photos/200?random=${index}`}
                                                alt="profile-url" width={200} height={150}/>
                                         <div className=" flex gap-x-2 mt-4">

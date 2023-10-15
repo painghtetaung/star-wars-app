@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Star Wars Character Info
+
+## Project Overview
+
+The Star Wars Character Card List is a web application that allows users to explore a list of Star Wars characters, view detailed information about each character, apply filters to refine the character list, perform global name searches, and authenticate to access protected routes. This project is built with a modern tech stack including Next.js, React Query, and Ant Design.
+
+## Table of Contents
+
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+  - [Authentication](#authentication)
+  - [Character List](#character-list)
+  - [Filtering and Search](#filtering-and-search)
+  - [Character Details](#character-details)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Features
+
+- **User Authentication**: Users can create accounts or log in to access protected routes
+
+- **Character List**: Browse a paginated list of Star Wars characters, complete with character cards displaying essential details.
+
+- **Filtering and Search**: Filter characters based on attributes like species, homeworl, and films. Use the global name search feature to find specific characters.
+
+- **Character Details**: Clicking on a character card reveals a detailed character profile with in-depth information.
+  
+- **Api Error Handling
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Make sure you have the following installed on your system:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Node.js
+- npm (Node Package Manager)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- NextJS
+- Ant Design
+- react-testing with jest for integration testing
+- middleware for authentication
+- react-query and axios for the api fecthing
+- Typescript
+- Tailwind
+- msw and whatwg-fetch for the data fetching in testing environment
+- Vercel for the deployment
 
-## Learn More
+### Installation
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone the repository:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```sh
+   git clone https://github.com/painghtetaung/star-wars-app.git
+   cd star-wars-app
+   npm i
+   npm run dev
+   npm run test
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   Then press a
 
-## Deploy on Vercel
+### Production Link
+- https://star-wars-app-azure.vercel.app/login
+  
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
